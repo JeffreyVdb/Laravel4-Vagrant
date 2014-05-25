@@ -14,7 +14,8 @@ class php55
 	exec 
 	{ 
 		'add php55 apt-repo':
-			command => '/usr/bin/add-apt-repository ppa:ondrej/php5 -y',
+			command => '/usr/bin/add-apt-repository ppa:ondrej/php5 -y &&\
+						/usr/bin/add-apt-repository ppa:ptn107/apache -y',
 			require => [Package['python-software-properties']],
 	}
 
