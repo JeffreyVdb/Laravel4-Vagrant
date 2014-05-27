@@ -17,6 +17,10 @@ Vagrant.configure("2") do |config|
         lv4_config.vm.synced_folder "www", "/var/www", {:mount_options => ['dmode=777','fmode=777']}
         lv4_config.vm.provision :shell, :inline => "echo \"Europe/London\" | sudo tee /etc/timezone && dpkg-reconfigure --frontend noninteractive tzdata"
 
+        # run lucid base box optimizations
+        lv4_config.vm.provision :shell, :privileged => true,
+          :path => "https://gist.githubusercontent.com/JeffreyVdb/3c0a6ec558e0bb921272/raw/bffb23383d4145ff9ed719622f724fbc9d0035e7/optimizations.sh"
+
         lv4_config.vm.provider :virtualbox do |v|
             v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
             v.customize ["modifyvm", :id, "--memory", "512"]
