@@ -14,16 +14,20 @@ Vagrant.configure("2") do |config|
         lv4_config.vm.network :forwarded_port, guest: 5432, host: 5433, auto_correct: true
         lv4_config.vm.hostname = "laravel"
 
-		# for virtualbox synced directories
+		    # for virtualbox synced directories
         lv4_config.vm.synced_folder "www", "/var/www", {:mount_options => ['dmode=777','fmode=777']}
 
-		# for nfs shared directories (better performance)
-		# lv4_config.vm.synced_folder "www", "/var/www", type: 'nfs', linux__nfs_options: ["no_root_squash,rw"]
+		    # for nfs shared directories (better performance)
+		    # lv4_config.vm.synced_folder "www", "/var/www", type: 'nfs', linux__nfs_options: ["no_root_squash,rw"]
 
-		# set timezone settings
+		    # set timezone settings
         lv4_config.vm.provision :shell, :inline => "echo \"Europe/Brussels\" | sudo tee /etc/timezone && dpkg-reconfigure --frontend noninteractive tzdata"
 
-		# set virtual machine settings
+        # run lucid base box optimizations
+        lv4_config.vm.provision :shell, :privileged => true,
+          :path => "https://gist.githubusercontent.com/JeffreyVdb/3c0a6ec558e0bb921272/raw/bffb23383d4145ff9ed719622f724fbc9d0035e7/optimizations.sh"
+
+		    # set virtual machine settings
         lv4_config.vm.provider :virtualbox do |v|
             v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
             v.customize ["modifyvm", :id, "--memory", "2048"]
