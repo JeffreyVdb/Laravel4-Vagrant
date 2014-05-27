@@ -25,7 +25,7 @@ Vagrant.configure("2") do |config|
 
         # run lucid base box optimizations
         lv4_config.vm.provision :shell, :privileged => true,
-          :path => "https://gist.githubusercontent.com/JeffreyVdb/3c0a6ec558e0bb921272/raw/bffb23383d4145ff9ed719622f724fbc9d0035e7/optimizations.sh"
+          :path => "vagrant/provision/base_box_optimizations.sh"
 
 		    # set virtual machine settings
         lv4_config.vm.provider :virtualbox do |v|
