@@ -3,7 +3,7 @@
 # exit script if not run as root
 if [[ $EUID -ne 0 ]]; then
     cat <<END
-you need to run this script as the root user' >&2
+you need to run this script as the root user
 use :privileged => true in Vagrantfile
 END
 
